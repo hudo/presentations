@@ -13,14 +13,9 @@ namespace EfCoreDemo
     {
         static void Main(string[] args)
         {
-            var connection = new SqliteConnection("DataSource=:memory:");
-            connection.Open();
+            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 
-            var options = new DbContextOptionsBuilder<ConferenceContext>()
-                .UseSqlite(connection)
-                .Options;
-
-            var db = new ConferenceContext(options);
+            var db = new ConferenceContext();
             db.GetService<ILoggerFactory>().AddProvider(new MyLoggerProvider());
 
             db.Database.EnsureCreated();
