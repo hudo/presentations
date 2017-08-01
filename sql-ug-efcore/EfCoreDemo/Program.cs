@@ -14,7 +14,7 @@ namespace EfCoreDemo
         static void Main(string[] args)
         {
             HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
-
+            
             var db = new ConferenceContext();
             db.GetService<ILoggerFactory>().AddProvider(new MyLoggerProvider());
 
@@ -35,6 +35,8 @@ namespace EfCoreDemo
                 Title = x.Conference.Title,
             }));
 
+
+
             Console.WriteLine("done.");
         }
 
@@ -48,14 +50,16 @@ namespace EfCoreDemo
                     Title = "Sql Ug Dublin",
                     Talks = new List<Talk>
                     {
-                        new Talk
+                        new TechnicalTalk()
                         {
                             Title = "first talk",
+                            Level = 200,
                             Presenter = new Presenter {Name = "presenter 1"}
                         },
-                        new Talk
+                        new BusinessTalk()
                         {
                             Title = "second talk",
+                            Topic = "PM",
                             Presenter = new Presenter {Name = "presenter 2"}
                         }
                     }

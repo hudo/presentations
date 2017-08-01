@@ -22,13 +22,13 @@ namespace EfCoreDemo
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<BusinessTalk>().HasBaseType<Talk>();
+            modelBuilder.Entity<TechnicalTalk>().HasBaseType<Talk>();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=conferences;Trusted_Connection=true");
-            //optionsBuilder.UseSqlite("DataSource=:memory:");
         }
     }
 
@@ -40,7 +40,7 @@ namespace EfCoreDemo
         public ICollection<Talk> Talks { get; set; }
     }
 
-    public class Talk
+    public abstract class Talk
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -48,6 +48,17 @@ namespace EfCoreDemo
         public Presenter Presenter { get; set; }
         public Conference Conference { get; set; }
     }
+
+    public class TechnicalTalk : Talk
+    {
+        public int Level { get; set; }
+    }
+
+    public class BusinessTalk : Talk
+    {
+        public string Topic { get; set; }
+    }
+
 
     public class Presenter
     {
